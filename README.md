@@ -11,7 +11,7 @@ This module scrapes upcoming train info from the [Translink](https://translink.c
 * `npm install`
 
 ## Configuration
-There are a number of configuraion options available:
+There are a number of configuration options available:
 
 | Option               | Default          | Description  |
 | ---------------------|------------------| -------------|
