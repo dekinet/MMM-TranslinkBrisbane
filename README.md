@@ -42,7 +42,7 @@ An entry in the module configuration file might look like this:
 * [node-html-parser](https://www.npmjs.com/package/node-html-parser): used to parse the data from the Translink website.
 
 ## Styling
-A simples `styles.css` file is included. The generated data utilises the following classes:
+A simple `styles.css` file is included. The generated data utilises the following classes:
 
 | Class Name           | Used |
 | ---------------------|------|
