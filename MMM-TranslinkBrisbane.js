@@ -9,7 +9,6 @@ Module.register("MMM-TranslinkBrisbane", {
 
     start: function() {
         self = this;
-        Log.info(this.config);
         Log.info("Starting module: " + this.name);
         this.traindata = [];
         this.getData();
@@ -47,9 +46,7 @@ Module.register("MMM-TranslinkBrisbane", {
     getDom: function() {
         var wrapper = document.createElement("div");
         wrapper.setAttribute('class', 'train-timetable');
-console.log(JSON.stringify(self.config, null, 2));
-console.log('station = ', self.config.station);
-        wrapper.innerText = self.config.station + ' trains';
+        wrapper.innerText = this.config.station[0].toUpperCase() + this.config.station.slice(1) + ' trains';
         let table = document.createElement('table');
         table.setAttribute('class', 'train-table');
         let theadrow = document.createElement('tr');
@@ -69,6 +66,7 @@ console.log('station = ', self.config.station);
                i++) {
             const scheduledText = this.traindata.data.payload[i].scheduled;
             const arrivingText = this.traindata.data.payload[i].arriving;
+            if (arrivingText.includes('skip')) continue;
             if ((i > 0) &&
                 (scheduledText == this.traindata.data.payload[i - 1].scheduled) &&
                 (arrivingText == this.traindata.data.payload[i - 1].arriving)) {

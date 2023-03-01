@@ -39,7 +39,7 @@ module.exports = NodeHelper.create({
     console.log("Notification: " + notification + " Payload: " + JSON.stringify(payload));
 
     if (notification === "GET_DATA") {
-      const url = 'https://jp.translink.com.au/plan-your-journey/stops/' + payload.config.station + '-station';
+      const url = 'https://jp.translink.com.au/plan-your-journey/stops/' + payload.config.station.toLowerCase() + '-station';
 
       const req = https.get(url, res => {
         let body = '';
