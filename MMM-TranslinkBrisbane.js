@@ -36,7 +36,7 @@ Module.register("MMM-TranslinkBrisbane", {
 
     socketNotificationReceived: function(notification, payload) {
         if (notification === "GOT_DATA") {
-            Log.info(this.name + ' received data: ' + JSON.stringify(payload));
+            Log.debug(this.name + ' received data: ' + JSON.stringify(payload));
             this.traindata = { data: payload };
             this.updateDom();
         }
