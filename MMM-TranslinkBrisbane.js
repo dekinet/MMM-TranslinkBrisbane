@@ -5,6 +5,8 @@ Module.register("MMM-TranslinkBrisbane", {
         station : "taringa",
         updateIntervalSecs: 60,
         maxNumTrains: 5,
+        displayDestination: false,
+        timeFormat: 24,
     },
 
     start: function() {
@@ -51,6 +53,11 @@ Module.register("MMM-TranslinkBrisbane", {
         table.setAttribute('class', 'train-table');
         let theadrow = document.createElement('tr');
         theadrow.setAttribute('class', 'train-table-header');
+        if (this.config.displayDestination) {
+          let destination = document.createElement('th');
+          destination.innerText = 'Destination';
+          theadrow.appendChild(destination);
+        }
         let scheduled = document.createElement('th');
         scheduled.innerText = 'Scheduled';
         theadrow.appendChild(scheduled);
@@ -75,6 +82,12 @@ Module.register("MMM-TranslinkBrisbane", {
             }
             let row = document.createElement('tr');
             let td = document.createElement('td');
+            if (this.config.displayDestination) {
+              td.setAttribute('class', 'train-destination train-cell');
+              td.innerText = this.traindata.data.payload[i].destination;
+              row.appendChild(td);
+              td = document.createElement('td');
+            }
             td.setAttribute('class', 'train-scheduled train-cell');
             td.innerText = scheduledText;
             row.appendChild(td);

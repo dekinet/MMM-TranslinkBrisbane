@@ -2,7 +2,7 @@ const NodeHelper = require("node_helper");
 const https = require('https');
 const HTMLParser = require('node-html-parser');
 
-function processData(data) {
+function processData(data, timeFormat) {
   let result = [];
 
   if (data) {
@@ -15,10 +15,17 @@ function processData(data) {
         const span = row.getElementsByTagName('span')[0];
         const fields = span.innerText.trim().split(',');
         if (fields[0].includes('Downward')) {
-          const scheduled = fields[2].split('.')[0].split(' ');
+          let scheduled = fields[2].split('.')[0].split(' ');
+          if (timeFormat == 24) {
+            const hour = parseInt(scheduled[3].split(':')[0], 10) + 12;
+            const minutes = scheduled[3].split(':')[1];
+            scheduled = hour.toString() + ':' + minutes;
+          } else {
+            scheduled = scheduled[3] + ' ' + scheduled[4];
+          }
           result.push({
-            destination: fields[0].split(' ')[0],
-            scheduled: scheduled[3] + ' ' + scheduled[4],
+            destination: fields[0].split('Train')[0],
+            scheduled: scheduled,
             arriving: fields[1].trim().replace('real-time unavailable', '?'),
           });
         }
@@ -50,7 +57,7 @@ module.exports = NodeHelper.create({
 
         res.on('end', () => {
           try {
-            const result = processData(body);
+            const result = processData(body, payload.config.timeFormat);
             self.sendSocketNotification("GOT_DATA", { payload: result });
           } catch (error) {
             console.error(error.message);
