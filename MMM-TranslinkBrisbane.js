@@ -2,7 +2,7 @@ Module.register("MMM-TranslinkBrisbane", {
 
     // Default module config.
     defaults: {
-        station : "taringa",
+        station : "central",
         updateIntervalSecs: 60,
         maxNumTrains: 5,
         displayDestination: false,

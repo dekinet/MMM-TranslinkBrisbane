@@ -17,8 +17,10 @@ function processData(data, timeFormat, directions) {
         if ((fields[0].includes('Downward') && directions.includes('Downward')) ||
             (fields[0].includes('Upward') && directions.includes('Upward'))) {
           let scheduled = fields[2].split('.')[0].split(' ');
+          const ampm = scheduled[4];
           if (timeFormat == 24) {
-            const hour = parseInt(scheduled[3].split(':')[0], 10) + 12;
+            let hour = parseInt(scheduled[3].split(':')[0], 10);
+            if (ampm == "PM") hour += 12;
             const minutes = scheduled[3].split(':')[1];
             scheduled = hour.toString() + ':' + minutes;
           } else {
