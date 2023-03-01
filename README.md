@@ -20,7 +20,7 @@ There are a number of configuration options available:
 | `maxNumTrains`       | 5                | How many upcoming trains should be displayed. |
 | `displayDestination` | false            | Include the destination of the train in the display. |
 | `timeFormat`         | 24               | Show times in 12-hour or 24-hour format. |
-| `directions`         | `[ 'Downward' ]` | An array of one or both of 'Upward' or 'Downward' directions. 'Downward' trains travel towards the city, 'Upward' trains travel away from the city. |
+| `directions`         | `['Downward']` | An array of one or both of 'Upward' or 'Downward' directions. 'Downward' trains travel towards the city, 'Upward' trains travel away from the city. |
 
 An entry in the module configuration file might look like this:
 ```
