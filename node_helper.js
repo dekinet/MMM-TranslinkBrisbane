@@ -2,7 +2,7 @@ const NodeHelper = require("node_helper");
 const https = require('https');
 const HTMLParser = require('node-html-parser');
 
-function processData(data, timeFormat) {
+function processData(data, timeFormat, directions) {
   let result = [];
 
   if (data) {
@@ -14,7 +14,8 @@ function processData(data, timeFormat) {
       rows.forEach(row => {
         const span = row.getElementsByTagName('span')[0];
         const fields = span.innerText.trim().split(',');
-        if (fields[0].includes('Downward')) {
+        if ((fields[0].includes('Downward') && directions.includes('Downward')) ||
+            (fields[0].includes('Upward') && directions.includes('Upward'))) {
           let scheduled = fields[2].split('.')[0].split(' ');
           if (timeFormat == 24) {
             const hour = parseInt(scheduled[3].split(':')[0], 10) + 12;
@@ -57,7 +58,7 @@ module.exports = NodeHelper.create({
 
         res.on('end', () => {
           try {
-            const result = processData(body, payload.config.timeFormat);
+            const result = processData(body, payload.config.timeFormat, payload.config.directions);
             self.sendSocketNotification("GOT_DATA", { payload: result });
           } catch (error) {
             console.error(error.message);

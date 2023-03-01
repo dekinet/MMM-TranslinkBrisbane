@@ -7,6 +7,7 @@ Module.register("MMM-TranslinkBrisbane", {
         maxNumTrains: 5,
         displayDestination: false,
         timeFormat: 24,
+        directions: [ 'Downward' ],
     },
 
     start: function() {
