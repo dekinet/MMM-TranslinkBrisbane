@@ -20,7 +20,7 @@ function processData(data, timeFormat, directions) {
           const ampm = scheduled[4];
           if (timeFormat == 24) {
             let hour = parseInt(scheduled[3].split(':')[0], 10);
-            if (ampm == "PM") hour += 12;
+            if ((ampm == "PM") && (hour != 12)) hour += 12;
             const minutes = scheduled[3].split(':')[1];
             scheduled = hour.toString() + ':' + minutes;
           } else {
