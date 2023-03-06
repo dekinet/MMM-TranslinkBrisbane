@@ -11,14 +11,14 @@ Module.register("MMM-TranslinkBrisbane", {
     },
 
     start: function() {
-        self = this;
+        mtb = this;
         Log.info("Starting module: " + this.name);
         this.traindata = [];
         this.getData();
         
         setInterval(() => {
-            self.getData();
-        }, self.config.updateIntervalSecs * 1000);
+            mtb.getData(mtb);
+        }, mtb.config.updateIntervalSecs * 1000);
     },
 
     // Define required styles.
@@ -28,9 +28,9 @@ Module.register("MMM-TranslinkBrisbane", {
         ];
     },
 
-    getData: function() {
-        Log.info(this.name + ": Getting data.");
-        this.sendSocketNotification("GET_DATA", {
+    getData: function(mtb = this) {
+        Log.info(mtb.name + ": Getting data.");
+        mtb.sendSocketNotification("GET_DATA", {
             config: this.config
         });
     },
