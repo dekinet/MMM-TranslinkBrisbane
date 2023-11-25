@@ -13,7 +13,7 @@ Module.register("MMM-TranslinkBrisbane", {
     start: function() {
         mtb = this;
         Log.info("Starting module: " + this.name);
-        this.traindata = [];
+        this.traindata = { data: [] };
         this.getData();
         
         setInterval(() => {
@@ -62,9 +62,9 @@ Module.register("MMM-TranslinkBrisbane", {
         let scheduled = document.createElement('th');
         scheduled.innerText = 'Scheduled';
         theadrow.appendChild(scheduled);
-        let arriving = document.createElement('th');
-        arriving.innerText = 'Arriving';
-        theadrow.appendChild(arriving);
+        let departing = document.createElement('th');
+        departing.innerText = 'Departing';
+        theadrow.appendChild(departing);
         table.appendChild(theadrow);
 
         if (this.traindata.data.payload) {
@@ -73,11 +73,11 @@ Module.register("MMM-TranslinkBrisbane", {
                (i < this.traindata.data.payload.length) && (numRows < this.config.maxNumTrains);
                i++) {
             const scheduledText = this.traindata.data.payload[i].scheduled;
-            const arrivingText = this.traindata.data.payload[i].arriving;
-            if (arrivingText.includes('skip')) continue;
+            const departingText = this.traindata.data.payload[i].departing;
+            if (departingText.includes('skip')) continue;
             if ((i > 0) &&
                 (scheduledText == this.traindata.data.payload[i - 1].scheduled) &&
-                (arrivingText == this.traindata.data.payload[i - 1].arriving)) {
+                (departingText == this.traindata.data.payload[i - 1].departing)) {
               // Duplicate (maybe due to platform changing).
               continue;
             }
@@ -93,8 +93,8 @@ Module.register("MMM-TranslinkBrisbane", {
             td.innerText = scheduledText;
             row.appendChild(td);
             td = document.createElement('td');
-            td.setAttribute('class', 'train-arriving train-cell');
-            td.innerText = arrivingText;
+            td.setAttribute('class', 'train-departing train-cell');
+            td.innerText = departingText;
             row.appendChild(td);
             table.appendChild(row);
             numRows++;

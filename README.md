@@ -51,5 +51,5 @@ A simple `styles.css` file is included. The generated data utilises the followin
 | `train-table-header` | The header row of the table |
 | `train-destination`  | Table cells in the destination column |
 | `train-scheduled`    | Table cells in the scheduled column |
-| `train-arriving`     | Table cells in the arriving column |
+| `train-departing`    | Table cells in the departing column |
 | `train-cell`         | All cells in the table |

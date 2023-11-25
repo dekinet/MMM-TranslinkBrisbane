@@ -8,31 +8,41 @@ function processData(data, timeFormat, directions) {
   if (data) {
     const root = HTMLParser.parse(data);
     if (root) {
-      const stopTimetable = root.getElementById('stop-timetable');
-      const tbody = stopTimetable.getElementsByTagName('tbody')[0];
-      const rows = tbody.getElementsByTagName('tr');
-      rows.forEach(row => {
-        const span = row.getElementsByTagName('span')[0];
-        const fields = span.innerText.trim().split(',');
-        if ((fields[0].includes('Downward') && directions.includes('Downward')) ||
-            (fields[0].includes('Upward') && directions.includes('Upward'))) {
-          let scheduled = fields[2].split('.')[0].split(' ');
-          const ampm = scheduled[4];
-          if (timeFormat == 24) {
-            let hour = parseInt(scheduled[3].split(':')[0], 10);
-            if ((ampm == "PM") && (hour != 12)) hour += 12;
-            const minutes = scheduled[3].split(':')[1];
-            scheduled = hour.toString() + ':' + minutes;
-          } else {
-            scheduled = scheduled[3] + ' ' + scheduled[4];
-          }
-          result.push({
-            destination: fields[0].split('Train')[0],
-            scheduled: scheduled,
-            arriving: fields[1].trim().replace('real-time unavailable', '?'),
+      const mainElement = root.getElementsByTagName('main')[0];
+      const tables = mainElement.getElementsByTagName('table');
+      for (table of tables) {
+        const caption = table.getElementsByTagName('caption')[0];
+        if (caption.innerText.includes('Services departing ')) {
+          const tbody = table.getElementsByTagName('tbody')[0];
+          const rows = tbody.getElementsByTagName('tr');
+          rows.forEach(row => {
+            const tds = row.getElementsByTagName('td');
+            const details = tds[1].getElementsByTagName('div')[1].getElementsByTagName('div')[0];
+            let destination = details.getElementsByTagName('a')[0].innerText;
+            destination = destination.substr(0, destination.indexOf(' train'));
+            const direction = details.getElementsByTagName('span')[0].innerText;
+            if (((direction == 'Downward') && directions.includes('Downward')) ||
+                ((direction == 'Upward') && directions.includes('Upward'))) {
+              let scheduled = tds[2].getElementsByTagName('div')[0].getElementsByTagName('span')[0].innerText.split(' ');
+              const ampm = scheduled[1];
+              if (timeFormat == 24) {
+                let hour = parseInt(scheduled[0].split(':')[0], 10);
+                if ((ampm == "PM") && (hour != 12)) hour += 12;
+                const minutes = scheduled[0].split(':')[1];
+                scheduled = hour.toString() + ':' + minutes;
+              } else {
+                scheduled = scheduled[0] + ' ' + scheduled[1];
+              }
+              const departing = tds[3].getElementsByTagName('div')[0].getElementsByTagName('span')[0].getElementsByTagName('div')[0].innerText;
+              result.push({
+                destination,
+                scheduled,
+                departing,
+              });
+            }
           });
         }
-      });
+      }
     }
   }
 
