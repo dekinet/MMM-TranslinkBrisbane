@@ -53,3 +53,6 @@ A simple `styles.css` file is included. The generated data utilises the followin
 | `train-scheduled`    | Table cells in the scheduled column |
 | `train-departing`    | Table cells in the departing column |
 | `train-cell`         | All cells in the table |
+
+## Screenshot
+![image](https://github.com/dekinet/MMM-TranslinkBrisbane/assets/108780459/34044d8e-9052-4a06-a662-877158f827b6)
