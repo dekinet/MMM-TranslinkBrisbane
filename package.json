@@ -15,7 +15,7 @@
     "test": "npm run lint"
   },
   "author": "dekinet",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@eslint/js": "^8.56.0",
     "@stylistic/eslint-plugin": "^1.6.0",
